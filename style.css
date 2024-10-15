@@ -1,0 +1,60 @@
+/* Tüm sayfa sıfırlama */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Modern Yazı Tipi */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00BFA6; /* Cam Göbeği Arka Plan */
+    overflow: hidden;
+}
+
+/* Yükleniyor ve Hoşgeldiniz Animasyonu */
+#loader {
+    text-align: center;
+    animation: fadeInOut 5s ease-in-out;
+}
+
+#loader h1 {
+    font-size: 4rem;
+    color: #0A1172; /* Gece Mavisi Başlık */
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#loader p {
+    font-size: 1.5rem;
+    color: #FFFFFF; /* Beyaz Alt Metin */
+    margin-top: 10px;
+}
+
+/* Spinner animasyonu */
+.spinner {
+    border: 8px solid #F0F0F0; /* Açık Gri Kenar */
+    border-top: 8px solid #0A1172; /* Gece Mavisi Üst Kenar */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1.5s linear infinite;
+    margin: 0 auto 20px;
+}
+
+/* Spinner Dönme Animasyonu */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Fade In ve Fade Out Animasyonu */
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
