@@ -14,22 +14,6 @@ body {
 }
 
 /* Navigation Bar */
-/* Genel Stil */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #F5F7FA;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Navigation Bar */
 nav {
     width: 100%;
     background-color: #040348;
@@ -40,12 +24,11 @@ nav {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Logo, Menü ve Butonu ayırmak için */
+    justify-content: space-between;
 }
 
-/* Logo */
 .nav-logo {
-    flex: 1; /* Sol tarafa sabitliyoruz */
+    flex: 1;
     margin-left: 20px;
 }
 
@@ -54,9 +37,8 @@ nav {
     width: auto;
 }
 
-/* Navigation Menüsü */
 .nav-menu {
-    flex: 2; /* Menü alanı ortalanıyor */
+    flex: 2;
     display: flex;
     justify-content: center;
 }
@@ -69,7 +51,7 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 15px; /* Menü öğeleri arasındaki boşluk */
+    margin: 0 15px;
 }
 
 nav ul li a {
@@ -84,11 +66,10 @@ nav ul li a:hover {
     color: #ff4400;
 }
 
-/* Katılım Formu Butonu */
 .nav-button {
-    flex: 1; /* Sağ tarafa sabitliyoruz */
+    flex: 1;
     display: flex;
-    justify-content: flex-end; /* Butonu sağda tutmak için */
+    justify-content: flex-end;
     margin-right: 20px;
 }
 
@@ -108,30 +89,17 @@ nav ul li a:hover {
     background-color: #e63900;
 }
 
-/* Responsive Ayarları */
-@media (max-width: 768px) {
-    .nav-menu {
-        display: none;
-    }
-
-    .katilim-btn {
-        padding: 6px 12px;
-    }
-}
-
-
 /* Header Video Arka Plan */
 #background-video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     object-fit: cover;
     z-index: -1;
 }
 
-/* Header Bölümü */
 .header {
     position: relative;
     min-height: 100vh;
@@ -143,25 +111,14 @@ nav ul li a:hover {
     color: #fff;
 }
 
-.header h1 {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    animation: fadeIn 2s ease-in-out;
-}
-
-.header p {
-    font-size: 1.5rem;
-    margin-bottom: 40px;
-    animation: fadeIn 2.5s ease-in-out;
-}
-
+/* Countdown */
 .countdown {
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 30px;
 }
 
-/* Kayıt ve Bilet Butonları */
+/* Kayıt Ol ve Bilet Al Butonları */
 .action-buttons .btn {
     display: inline-block;
     padding: 15px 40px;
@@ -179,66 +136,76 @@ nav ul li a:hover {
     transform: scale(1.05);
 }
 
-/* Hakkında, Program ve İletişim Bölümleri */
-.about, .program, .contact {
+/* Genel Bölüm Stili */
+.content-section {
     padding: 80px 20px;
     text-align: center;
     background-color: #F7F9FC;
+    margin-top: 40px;
 }
 
-.about h2, .program h2, .contact h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-
-.about p, .program p, .contact p {
-    font-size: 1.2rem;
-    max-width: 800px;
-    margin: 0 auto;
-    line-height: 1.8;
-}
-
-/* Footer Bölümü */
-.footer {
-    padding: 30px;
-    background-color: #003366;
-    color: white;
-    text-align: center;
+.content-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.footer p {
-    margin: 0;
-    flex: 1;
-    text-align: center;
+/* Hakkında Bölümündeki Fotoğraf Sağda */
+#about .text-container {
+    flex-basis: 50%;
+    padding: 20px;
+    text-align: left;
 }
 
-.footer-social-icons {
-    display: flex;
-    justify-content: center;
+#about .image-container {
+    flex-basis: 45%;
+    padding: 20px;
 }
 
-.footer-social-icons i {
-    font-size: 1.5rem;
-    margin: 0 15px;
-    color: #fff;
-    transition: color 0.3s ease;
+#about .image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
 }
 
-.footer-social-icons i:hover {
-    color: #00A3E1;
+/* Sürdürülebilir Motivasyon Bölümündeki Fotoğraf Solda */
+#motivation .text-container {
+    order: 2; /* Metni sağa al */
+    flex-basis: 50%;
+    padding: 20px;
+    text-align: left;
 }
 
-/* Animasyonlar */
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+#motivation .image-container {
+    order: 1; /* Fotoğrafı sola al */
+    flex-basis: 45%;
+    padding: 20px;
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+#motivation .image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Responsive Ayarları (Küçük Ekranlar İçin) */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .katilim-btn {
+        padding: 6px 12px;
+    }
+
+    .content-container {
+        flex-direction: column;
+    }
+
+    .image-container {
+        margin-top: 20px;
+    }
 }
