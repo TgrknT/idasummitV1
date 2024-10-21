@@ -18,7 +18,7 @@ body {
 /* Yükleniyor ve Hoşgeldiniz Animasyonu */
 #loader {
     text-align: center;
-    animation: fadeInOut 5s ease-in-out;
+    animation: fadeInOut 1s ease-in-out;
 }
 
 #loader h1 {
