@@ -25,3 +25,42 @@ const countdown = () => {
 
 // Her saniye güncelle
 setInterval(countdown, 1000);
+
+// Katılım formu açma ve kapama işlemleri
+const modal = document.getElementById("formModal");
+const openBtns = document.querySelectorAll(".katilim-btn"); // Tüm katılım butonlarını seçiyoruz
+const closeBtns = document.querySelectorAll(".close-btn"); // Tüm kapatma butonlarını seçiyoruz
+
+// Katılım butonuna tıklayınca formu aç
+openBtns.forEach(openBtn => {
+    openBtn.addEventListener("click", function(e) {
+        e.preventDefault(); // Sayfanın yeniden yüklenmesini engeller
+        modal.style.display = "flex"; // Modalı göster
+    });
+});
+
+// Kapat butonuna tıklayınca formu kapat
+closeBtns.forEach(closeBtn => {
+    closeBtn.addEventListener("click", function() {
+        modal.style.display = "none"; // Modalı gizle
+    });
+});
+
+// Modal dışında bir yere tıklayınca formu kapat
+window.addEventListener("click", function(event) {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+
+// Konuşmacı slider'ını seçiyoruz
+const slider = document.getElementById('content-section');
+
+// Orijinal slide'ları alıyoruz
+const slides = slider.innerHTML;
+
+// 100 kez tekrar ettireceğiz
+for (let i = 0; i < 100; i++) {
+    slider.innerHTML += slides; // Her döngüde orijinal slide'ları ekliyoruz
+}

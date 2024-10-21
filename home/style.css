@@ -6,6 +6,11 @@
     scroll-behavior: smooth;
 }
 
+html, body {
+    height: 100%;
+    overflow-x: hidden; /* Yatay kaydırmayı engeller */
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: #F5F7FA;
@@ -17,7 +22,7 @@ body {
 nav {
     width: 100%;
     background-color: #040348;
-    padding: 10px 0;
+    padding: 0; /* İç boşluk kaldırıldı */
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -46,8 +51,7 @@ nav {
 nav ul {
     list-style: none;
     display: flex;
-    margin: 0;
-    padding: 0;
+    padding: 0; /* Varsayılan boşluk kaldırıldı */
 }
 
 nav ul li {
@@ -83,6 +87,7 @@ nav ul li a:hover {
     transition: background-color 0.3s ease;
     font-size: 0.9rem;
     text-align: center;
+    margin-top: 10px; /* Üst boşluk azaltıldı */
 }
 
 .katilim-btn:hover {
@@ -111,6 +116,11 @@ nav ul li a:hover {
     color: #fff;
 }
 
+.header h1, .header p {
+    margin: 0;
+    padding: 0;
+}
+
 /* Countdown */
 .countdown {
     font-size: 1.8rem;
@@ -124,7 +134,7 @@ nav ul li a:hover {
     padding: 15px 40px;
     margin: 15px;
     font-size: 1.2rem;
-    background-color: #003366;
+    background-color: #e63900;
     color: #fff;
     text-decoration: none;
     border-radius: 8px;
@@ -173,14 +183,14 @@ nav ul li a:hover {
 
 /* Sürdürülebilir Motivasyon Bölümündeki Fotoğraf Solda */
 #motivation .text-container {
-    order: 2; /* Metni sağa al */
+    order: 2;
     flex-basis: 50%;
     padding: 20px;
     text-align: left;
 }
 
 #motivation .image-container {
-    order: 1; /* Fotoğrafı sola al */
+    order: 1;
     flex-basis: 45%;
     padding: 20px;
 }
@@ -191,21 +201,211 @@ nav ul li a:hover {
     border-radius: 10px;
 }
 
-/* Responsive Ayarları (Küçük Ekranlar İçin) */
+/* Modal genel ayarlar */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #ff4400;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.modal form input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.modal form button {
+    background-color: #ff4400;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.modal form button:hover {
+    background-color: #e63900;
+}
+
+/* Slider Wrapper */
+.slider-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.slider {
+    display: flex;
+    gap: 10px;
+    animation: slide 20s linear infinite;
+}
+
+.slide {
+    min-width: 200px;
+    margin: 0 10px;
+    text-align: center;
+}
+
+.slide img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Konuşmacılar */
+#speakers .slide {
+    flex: 0 0 auto;
+    margin: 0 10px;
+}
+
+#speakers .slide img {
+    width: 254px;
+    height: 254px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+#speakers .name, #speakers .title {
+    text-align: center;
+    margin: 5px 0;
+}
+
+/* Partnerler */
+.single-partner {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.single-partner img {
+    width: 250px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.partners-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.partner {
+    flex: 0 0 calc(25% - 20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.partner img {
+    width: 250px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.partner-name {
+    display: none;
+}
+
+/* Responsive Ayarlar */
+@media (max-width: 1024px) {
+    .partner {
+        flex: 0 0 calc(33.33% - 20px);
+    }
+}
+
 @media (max-width: 768px) {
-    .nav-menu {
+    nav ul {
         display: none;
+    }
+
+    .header {
+        padding: 0 10px;
     }
 
     .katilim-btn {
         padding: 6px 12px;
+        width: 80%;
+        margin: 10px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        min-height: 60vh;
+        padding: 0 10px;
     }
 
-    .content-container {
-        flex-direction: column;
+    .action-buttons .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+        width: 80%;
+        margin: 10px auto;
     }
 
-    .image-container {
-        margin-top: 20px;
+    .single-partner img {
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .partner img {
+        width: 200px;
+        margin: 0 auto;
     }
 }
