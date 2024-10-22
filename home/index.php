@@ -1,13 +1,26 @@
+<?php
+require '../config.php'; // Veritabanı bağlantısı
+
+// Mevcut verileri çek
+$query = "SELECT * FROM home_content WHERE id = 1";
+$result = $conn->query($query);
+$content = $result->fetch_assoc();
+
+// Video URL'sini tam yol olarak oluşturun ve sonuna .mp4 ekleyin
+$video_url = './video/' . $content['video_url'] . '.mp4';
+
+// Etkinlik tarihini JavaScript için uygun formata dönüştür
+$event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ida Summit 2024</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
@@ -32,13 +45,13 @@
     <!-- Header Bölümü -->
     <header class="header" id="home">
         <video autoplay muted loop id="background-video">
-            <source src="tanitim.mp4" type="video/mp4">
+            <source src="<?php echo $video_url; ?>" type="video/mp4">
             Tarayıcınız video etiketini desteklemiyor.
         </video>
 
         <div class="header-content">
-            <h1>Ida Summit 2024</h1>
-            <p>Ida Summit 2024 | 27 Kasım 2024 | Altınoluk</p>
+            <h1><?php echo $content['header_text']; ?></h1>
+            <p><?php echo $content['subheader_text']; ?></p>
             <div id="countdown" class="countdown">
                 <span id="days">00</span> Gün 
                 <span id="hours">00</span> Saat 
@@ -77,22 +90,19 @@
         </div>
     </section>
 
-    <section id="speakers" class="content-section">
+<!-- Konuşmacılar Bölümü -->
+<section id="speakers" class="content-section">
     <div class="container">
         <h2>Konuşmacılar</h2>
         <div class="slider-wrapper">
             <div id="slider" class="slider">
                 <?php
-                // config.php dosyasını dahil et
-                include '../config.php';
-                
                 // Konuşmacı bilgilerini çek
                 $sql = "SELECT image_name, name, title FROM katilimcilar";
                 $result = $conn->query($sql);
-                
-                // Konuşmacıları bir diziye kaydet
+
                 $speakers = [];
-                if ($result->num_rows > 0) {
+                if ($result && $result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         $speakers[] = $row;
                     }
@@ -100,7 +110,7 @@
 
                 // Eğer konuşmacı verisi varsa, 100 kez tekrarla
                 if (!empty($speakers)) {
-                    for ($i = 0; $i < 100; $i++) {
+                    for ($i = 0; $i < 300; $i++) {
                         foreach ($speakers as $speaker) {
                             echo '<div class="slide">';
                             echo '<img src="./katilimcilar/' . $speaker["image_name"] . '" alt="' . $speaker["name"] . '">';
@@ -112,94 +122,79 @@
                 } else {
                     echo "Konuşmacı bulunamadı.";
                 }
-
-                // Veritabanı bağlantısını kapat
-                $conn->close();
                 ?>
             </div>
         </div>
     </div>
 </section>
 
-<section id="partners" class="content-section">
-    <div class="container">
-        <h2>Partnerler</h2>
-        <p>Etkinliğimize destek veren iş ortakları ve sponsorlar, gençlerin yaratıcı fikirlerini hayata geçirmeleri için önemli fırsatlar sunuyor. İşte bu yılın partnerleri:</p>
 
-        <div class="partners-logos">
-            <?php
-            // config.php dosyasını dahil et
-            include '../config.php';
+    <!-- Partnerler Bölümü -->
+    <section id="partners" class="content-section">
+        <div class="container">
+            <h2>Partnerler</h2>
+            <p>Etkinliğimize destek veren iş ortakları ve sponsorlar, gençlerin yaratıcı fikirlerini hayata geçirmeleri için önemli fırsatlar sunuyor.</p>
 
-            // Partner bilgilerini çek
-            $sql = "SELECT logo_name, partner_name, link FROM partnerler";
-            $result = $conn->query($sql);
+            <div class="partners-logos">
+                <?php
+                // Partner bilgilerini çek
+                $sql = "SELECT logo_name, partner_name, link FROM partnerler";
+                $result = $conn->query($sql);
 
-            // Partnerleri diziye ekle
-            $partners = [];
-            if ($result && $result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $partners[] = $row;
+                $partners = [];
+                if ($result && $result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $partners[] = $row;
+                    }
                 }
-            }
 
-            // Eğer partner verisi varsa, ilk partneri en üste ekle
-            if (!empty($partners)) {
-                // En üstteki partner
-                $first_partner = array_shift($partners);
-                echo '<div class="single-partner">';
-                echo '<a href="' . $first_partner["link"] . '" target="_blank">';
-                echo '<img src="./partnerler/' . $first_partner["logo_name"] . '" alt="' . $first_partner["partner_name"] . '">';
-                echo '</a>';
-                echo '</div>';
-
-                // Kalan partnerleri dört sütun halinde ekle
-                echo '<div class="partners-grid">';
-                foreach ($partners as $index => $partner) {
-                    echo '<div class="partner">';
-                    echo '<a href="' . $partner["link"] . '" target="_blank">';
-                    echo '<img src="./partnerler/' . $partner["logo_name"] . '" alt="' . $partner["partner_name"] . '">';
+                if (!empty($partners)) {
+                    $first_partner = array_shift($partners);
+                    echo '<div class="single-partner">';
+                    echo '<a href="' . $first_partner["link"] . '" target="_blank">';
+                    echo '<img src="./partnerler/' . $first_partner["logo_name"] . '" alt="' . $first_partner["partner_name"] . '">';
                     echo '</a>';
                     echo '</div>';
+
+                    echo '<div class="partners-grid">';
+                    foreach ($partners as $partner) {
+                        echo '<div class="partner">';
+                        echo '<a href="' . $partner["link"] . '" target="_blank">';
+                        echo '<img src="./partnerler/' . $partner["logo_name"] . '" alt="' . $partner["partner_name"] . '">';
+                        echo '</a>';
+                        echo '</div>';
+                    }
+                    echo '</div>';
+                } else {
+                    echo "Partner bulunamadı.";
                 }
-                echo '</div>';
-            } else {
-                echo "Partner bulunamadı.";
-            }
-
-            // Veritabanı bağlantısını kapat
-            $conn->close();
-            ?>
+                ?>
+            </div>
         </div>
-    </div>
-</section>
-
+    </section>
 
     <!-- Katılım Formu Modal -->
-<!-- Katılım Formu Modal -->
-<div id="formModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>Katılım Formu</h2>
-        <form action="#" method="post">
-            <label for="name">İsim:</label>
-            <input type="text" id="name" name="name" placeholder="İsminizi girin" required>
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Katılım Formu</h2>
+            <form action="#" method="post">
+                <label for="name">İsim:</label>
+                <input type="text" id="name" name="name" placeholder="İsminizi girin" required>
 
-            <label for="surname">Soyisim:</label>
-            <input type="text" id="surname" name="surname" placeholder="Soyisminizi girin" required>
+                <label for="surname">Soyisim:</label>
+                <input type="text" id="surname" name="surname" placeholder="Soyisminizi girin" required>
 
-            <label for="phone">Telefon No:</label>
-            <input type="tel" id="phone" name="phone" placeholder="Telefon numaranızı girin" required>
+                <label for="phone">Telefon No:</label>
+                <input type="tel" id="phone" name="phone" placeholder="Telefon numaranızı girin" required>
 
-            <label for="email">E-posta:</label>
-            <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" required>
+                <label for="email">E-posta:</label>
+                <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" required>
 
-            <button type="submit">Gönder</button>
-        </form>
+                <button type="submit">Gönder</button>
+            </form>
+        </div>
     </div>
-</div>
-
-
 
     <!-- Footer -->
     <footer class="footer">
@@ -211,7 +206,33 @@
         <p>&copy; Grknn. Tüm Hakları Saklıdır.</p>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
+    <!-- PHP'den gelen tarih bilgisini JavaScript'e aktarma -->
+     <script src='script.js'></script>
+    <script>
+        const eventDate = new Date("<?php echo $event_date_js; ?>").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').textContent = "Etkinlik başladı!";
+            }
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
+
 </body>
 </html>

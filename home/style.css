@@ -305,23 +305,38 @@ nav ul li a:hover {
     }
 }
 
-/* Konuşmacılar */
-#speakers .slide {
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.slider {
+    display: flex;
+    animation: scroll 5s linear infinite;
+}
+
+.slide {
     flex: 0 0 auto;
-    margin: 0 10px;
+    width: 200px; /* Her bir slide genişliği */
+    margin-right: 10px; /* Slide arası boşluk */
 }
 
-#speakers .slide img {
-    width: 254px;
-    height: 254px;
-    object-fit: cover;
-    border-radius: 8px;
+.slider img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
 
-#speakers .name, #speakers .title {
-    text-align: center;
-    margin: 5px 0;
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
 }
+
 
 /* Partnerler */
 .single-partner {

@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f0f0f0; /* Daha açık beyaz arka plan */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: rgb(0, 33, 71); /* Parlament mavisi */
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: white;
+}
+
+.sidebar ul {
+    list-style: none;
+    width: 100%;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    transition: background-color 0.3s, padding-left 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #00539c; /* Daha açık parlament mavisi */
+    padding-left: 25px; /* Hover durumunda sola doğru kaydırma */
+}
+
+.submenu {
+    list-style: none;
+    padding-left: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.menu.open .submenu {
+    max-height: 200px; /* Alt menülerin toplam boyutuna göre artırabilirsiniz */
+}
+
+.submenu li a {
+    font-size: 14px;
+    padding: 8px 10px;
+}
+
+.content {
+    flex: 1;
+    padding: 40px;
+    background-color: #fff; /* Beyaz arka plan */
+    color: rgb(0, 33, 71); /* Parlament mavisi metin */
+    overflow-y: auto; /* İçerik kaydırma */
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+}
+
+.content h1 {
+    margin-bottom: 30px;
+    color: rgb(0, 33, 71);
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.content form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: rgb(0, 33, 71);
+}
+
+.input-group input {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid rgb(0, 33, 71); /* Parlament mavisi kenar */
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: rgb(0, 33, 71);
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #00539c; /* Odaklanıldığında daha açık parlament mavisi kenar */
+    background-color: #eef4fa; /* Daha açık mavi arka plan */
+}
+
+.login-btn {
+    background-color: rgb(0, 33, 71); /* Parlament mavisi */
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #00539c; /* Hover durumunda daha açık parlament mavisi */
+}
+
+/* Başlıklar arasında daha fazla boşluk */
+.content h2 {
+    font-size: 20px;
+    color: rgb(0, 33, 71);
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Hata ve bilgi mesajları */
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}

@@ -1,0 +1,91 @@
+/* Genel Stil */
+body {
+    background-color: #f0f0f0; /* Beyaz arka plan */
+    color: rgb(0, 33, 71); /* Parlament mavisi metin */
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Login Container */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+/* Login Kutusu */
+.login-box {
+    background-color: #e0e0e0; /* Açık gri kutu arka planı */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+.login-box h2 {
+    color: rgb(0, 33, 71); /* Parlament mavisi başlık */
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Hata Mesajı */
+.error-message {
+    background-color: #ff4d4d; /* Kırmızı arka plan */
+    color: white; /* Beyaz metin */
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Giriş Formu */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 94%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #fff; /* Beyaz input arka planı */
+    border: 1px solid rgb(0, 33, 71); /* Parlament mavisi kenar */
+    border-radius: 5px;
+    color: rgb(0, 33, 71); /* Parlament mavisi metin */
+}
+
+.input-group input:focus {
+    outline: none;
+    border: 1px solid #00539c; /* Odaklanıldığında daha açık parlament mavisi kenar */
+}
+
+/* Giriş Butonu */
+.login-btn {
+    background-color: rgb(0, 33, 71); /* Parlament mavisi buton */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #00539c; /* Hover durumunda daha açık parlament mavisi */
+}
