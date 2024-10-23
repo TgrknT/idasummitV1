@@ -16,6 +16,30 @@ while ($row = $result_sections->fetch_assoc()) {
     $sections[$row['section_name']] = $row;
 }
 
+// Konuşmacı verilerini çek
+$query_speakers = "SELECT image_name, name, title FROM katilimcilar";
+$result_speakers = $conn->query($query_speakers);
+
+// Verileri bir diziye al
+$speakers = [];
+if ($result_speakers && $result_speakers->num_rows > 0) {
+    while ($row = $result_speakers->fetch_assoc()) {
+        $speakers[] = $row;
+    }
+}
+
+// Partner verilerini çek
+$query_partners = "SELECT logo_name, partner_name, link FROM partnerler";
+$result_partners = $conn->query($query_partners);
+
+// Verileri bir diziye al
+$partners = [];
+if ($result_partners && $result_partners->num_rows > 0) {
+    while ($row = $result_partners->fetch_assoc()) {
+        $partners[] = $row;
+    }
+}
+
 // Video URL'sini tam yol olarak oluşturun ve sonuna .mp4 ekleyin
 $video_url = './video/' . $content['video_url'] . '.mp4';
 
@@ -48,7 +72,7 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
             </ul>
         </div>
         <div class="nav-button">
-            <a href="#katilim-formu" class="katilim-btn">Katılım Formu</a>
+            <a href="#formModal" class="katilim-btn">Katılım Formu</a>
         </div>
     </nav>
 
@@ -69,7 +93,7 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
                 <span id="seconds">00</span> Saniye
             </div>
             <div class="action-buttons">
-                <a href="#katilim-formu" class="katilim-btn">Katılım Formu</a>
+                <a href="#formModal" class="katilim-btn">Katılım Formu</a>
             </div>
         </div>
     </header>
@@ -104,6 +128,7 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
         </section>
     <?php endif; ?>
 
+    <!-- Konuşmacılar Bölümü -->
 <!-- Konuşmacılar Bölümü -->
 <section id="speakers" class="content-section">
     <div class="container">
@@ -142,7 +167,6 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
         </div>
     </div>
 </section>
-
 
     <!-- Partnerler Bölümü -->
     <section id="partners" class="content-section">
@@ -190,28 +214,91 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
         </div>
     </section>
 
-    <!-- Katılım Formu Modal -->
-    <div id="formModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Katılım Formu</h2>
-            <form action="#" method="post">
-                <label for="name">İsim:</label>
-                <input type="text" id="name" name="name" placeholder="İsminizi girin" required>
+<!-- Katılım Formu Modal -->
+<div id="formModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Katılım Formu</h2>
+        <form id="katilimFormu" method="post">
+            <!-- Ad Soyad -->
+            <label for="ad_soyad">Ad Soyad:</label>
+            <input type="text" id="ad_soyad" name="ad_soyad" placeholder="Adınızı ve soyadınızı girin" required>
 
-                <label for="surname">Soyisim:</label>
-                <input type="text" id="surname" name="surname" placeholder="Soyisminizi girin" required>
+            <!-- Okul -->
+            <label for="okul">Okul:</label>
+            <select id="okul" name="okul" required>
+                <option value="">Okul Seçin</option>
+                <option value="Edremit MYO">Edremit MYO</option>
+                <option value="Altınoluk MYO">Altınoluk MYO</option>
+                <option value="Edremit Sivil Havacılık YO">Edremit Sivil Havacılık YO</option>
+                <option value="Havran MYO">Havran MYO</option>
+                <option value="Diğer">Diğer</option>
+            </select>
 
-                <label for="phone">Telefon No:</label>
-                <input type="tel" id="phone" name="phone" placeholder="Telefon numaranızı girin" required>
+            <!-- Bölüm -->
+            <label for="bolum">Bölüm:</label>
+            <input type="text" id="bolum" name="bolum" placeholder="Bölümünüzü girin" required>
 
-                <label for="email">E-posta:</label>
-                <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" required>
+            <!-- Sınıf -->
+            <label for="sinif">Sınıf:</label>
+            <input type="text" id="sinif" name="sinif" placeholder="Sınıfınızı girin" required>
 
-                <button type="submit">Gönder</button>
-            </form>
+            <!-- Cep Telefonu -->
+            <label for="cep_tel">Cep Telefonu:</label>
+            <input type="tel" id="cep_tel" name="cep_tel" placeholder="Telefon numaranızı girin" required>
+
+            <!-- E-posta -->
+            <label for="email">E-posta:</label>
+            <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" required>
+
+            <!-- Gönderim Butonu -->
+            <button type="submit">Gönder</button>
+        </form>
+
+        <!-- Başarı Mesajı -->
+        <div id="successMessage" style="display: none; color: green; margin-top: 10px;">
+            Form başarıyla gönderildi!
         </div>
     </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    // Form gönderildiğinde AJAX ile veriyi işleyin
+    $('#katilimFormu').on('submit', function(event) {
+        event.preventDefault(); // Sayfanın yenilenmesini önle
+
+        $.ajax({
+            url: 'form_submit.php',
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                // Başarılı gönderim mesajını göster
+                $('#successMessage').show();
+                // Formu temizle
+                $('#katilimFormu')[0].reset();
+                // Modal'ı kapat
+                setTimeout(function() {
+                    closeModal();
+                }, 2000);
+            },
+            error: function() {
+                alert('Form gönderimi başarısız! Lütfen tekrar deneyin.');
+            }
+        });
+    });
+
+    // Modal'ı kapatma fonksiyonu
+    function closeModal() {
+        $('#formModal').hide();
+    }
+
+    // Modal'ı açma fonksiyonu
+    function openModal() {
+        $('#formModal').show();
+    }
+</script>
+
 
     <!-- Footer -->
     <footer class="footer">

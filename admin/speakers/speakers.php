@@ -129,6 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['add_participant'])) {
             <li><a href="../textdesign/textdesign.php">Hakkında-Motivasyon</a></li>
             <li><a href="./speakers.php">Konuşmacılar</a></li>
             <li><a href="../partners/partners.php">Sponsorlar</a></li>
+            <li><a href="../katilim/katilim.php">Katılımcılar</a></li>
         </ul>
     </div>
 

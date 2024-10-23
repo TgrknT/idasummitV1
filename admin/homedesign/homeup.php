@@ -85,6 +85,7 @@ if (isset($_GET['delete_video']) && $_GET['delete_video'] == '1') {
             <li><a href="../textdesign/textdesign.php">Hakkında-Motivasyon</a></li>
             <li><a href="../speakers/speakers.php">Konuşmacılar</a></li>
             <li><a href="../partners/partners.php">Sponsorlar</a></li>
+            <li><a href="../katilim/katilim.php">Katılımcılar</a></li>
         </ul>
     </div>
 

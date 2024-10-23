@@ -129,6 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['add_partner'])) {
             <li><a href="../textdesign/textdesign.php">Hakkında-Motivasyon</a></li>
             <li><a href="../speakers/speakers.php">Konuşmacılar</a></li>
             <li><a href="./partners.php">Partnerler</a></li>
+            <li><a href="../katilim/katilim.php">Katılımcılar</a></li>
         </ul>
     </div>
 
