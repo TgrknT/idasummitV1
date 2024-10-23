@@ -19,13 +19,8 @@
         <h2>Admin Paneli</h2>
         <ul>
             <li class="menu">
-                <a href="#" class="toggle" onclick="toggleMenu(this.parentNode)">Ana Sayfa</a>
-                <ul class="submenu">
-                    <li><a href="./homedesign/homeup.php">Üst Başlık</a></li>
-                    <li><a href="./homedesign/homevideo.php">Video Düzenleme</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Kullanıcı Yönetimi</a></li>
+                <a href="./homedesign/homeup.php" class="toggle" onclick="toggleMenu(this.parentNode)">Ana Sayfa</a></li>
+            <li><a href="./textdesign/textdesign.php">Hakkında-Motivasyon</a></li>
             <li><a href="#">İçerik Düzenleme</a></li>
             <li><a href="#">Ayarlar</a></li>
         </ul>

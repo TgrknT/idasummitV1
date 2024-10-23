@@ -1,10 +1,20 @@
 <?php
 require '../config.php'; // Veritabanı bağlantısı
 
-// Mevcut verileri çek
+// Ana içerik verilerini çek
 $query = "SELECT * FROM home_content WHERE id = 1";
 $result = $conn->query($query);
 $content = $result->fetch_assoc();
+
+// Hakkında ve motivasyon verilerini çek
+$query_sections = "SELECT section_name, image_url, content_text FROM section_content";
+$result_sections = $conn->query($query_sections);
+
+// Verileri bir diziye al
+$sections = [];
+while ($row = $result_sections->fetch_assoc()) {
+    $sections[$row['section_name']] = $row;
+}
 
 // Video URL'sini tam yol olarak oluşturun ve sonuna .mp4 ekleyin
 $video_url = './video/' . $content['video_url'] . '.mp4';
@@ -65,35 +75,40 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
     </header>
 
     <!-- Hakkında Bölümü -->
-    <section id="about" class="content-section">
-        <div class="content-container">
-            <div class="text-container">
-                <h2>Hakkında</h2>
-                <p>İdasummer 24, teknoloji ve inovasyon dünyasına adım atmak isteyen genç zihinleri, alanında uzman kişilerle buluşturan bir etkinlik olarak tasarlanmıştır. Etkinlik, teknolojinin hızla gelişen dünyasında gençlerin yaratıcılıklarını ve potansiyellerini en üst düzeye çıkararak, onları geleceğin liderleri ve yenilikçileri haline getirmeyi hedefler.</p>
+    <?php if (!empty($sections['hakkinda'])): ?>
+        <section id="about" class="content-section">
+            <div class="content-container">
+                <div class="text-container">
+                    <h2>Hakkında</h2>
+                    <p><?php echo $sections['hakkinda']['content_text']; ?></p>
+                </div>
+                <div class="image-container rotate-left">
+                    <img src="./content/<?php echo $sections['hakkinda']['image_url']; ?>" alt="Hakkında Resim">
+                </div>
             </div>
-            <div class="image-container rotate-left">
-                <img src="ida3.png" alt="Hakkında Resim">
-            </div>
-        </div>
-    </section>
+        </section>
+    <?php endif; ?>
 
     <!-- Sürdürülebilir Motivasyon Bölümü -->
-    <section id="motivation" class="content-section">
-        <div class="content-container">
-            <div class="text-container">
-                <h2>Sürdürülebilir Motivasyon</h2>
-                <p>Etkinliğimiz, gençlerin sürdürülebilir bir gelecek için yaratıcılıklarını teşvik etmeyi amaçlamaktadır. Her katılımcı, çevreye duyarlı projeler geliştirme konusunda motive edilir.</p>
+    <?php if (!empty($sections['motivasyon'])): ?>
+        <section id="motivation" class="content-section">
+            <div class="content-container">
+                <div class="text-container">
+                    <h2>Sürdürülebilir Motivasyon</h2>
+                    <p><?php echo $sections['motivasyon']['content_text']; ?></p>
+                </div>
+                <div class="image-container rotate-right">
+                    <img src="./content/<?php echo $sections['motivasyon']['image_url']; ?>" alt="Sürdürülebilir Motivasyon Resim">
+                </div>
             </div>
-            <div class="image-container rotate-right">
-                <img src="ida2.png" alt="Sürdürülebilir Motivasyon Resim">
-            </div>
-        </div>
-    </section>
+        </section>
+    <?php endif; ?>
 
 <!-- Konuşmacılar Bölümü -->
 <section id="speakers" class="content-section">
     <div class="container">
         <h2>Konuşmacılar</h2>
+        <br>
         <div class="slider-wrapper">
             <div id="slider" class="slider">
                 <?php
@@ -133,8 +148,10 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
     <section id="partners" class="content-section">
         <div class="container">
             <h2>Partnerler</h2>
+            <br>
             <p>Etkinliğimize destek veren iş ortakları ve sponsorlar, gençlerin yaratıcı fikirlerini hayata geçirmeleri için önemli fırsatlar sunuyor.</p>
-
+                <br>
+                <br>
             <div class="partners-logos">
                 <?php
                 // Partner bilgilerini çek
@@ -207,7 +224,7 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
     </footer>
 
     <!-- PHP'den gelen tarih bilgisini JavaScript'e aktarma -->
-     <script src='script.js'></script>
+    <script src='script.js'></script>
     <script>
         const eventDate = new Date("<?php echo $event_date_js; ?>").getTime();
 

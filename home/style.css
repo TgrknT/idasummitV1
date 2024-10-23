@@ -282,7 +282,7 @@ nav ul li a:hover {
 .slider {
     display: flex;
     gap: 10px;
-    animation: slide 20s linear infinite;
+    animation: slide 500s linear infinite;
 }
 
 .slide {
@@ -313,7 +313,7 @@ nav ul li a:hover {
 
 .slider {
     display: flex;
-    animation: scroll 5s linear infinite;
+    animation: scroll 30s linear infinite;
 }
 
 .slide {
