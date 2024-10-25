@@ -164,10 +164,11 @@ body {
     border: 1px solid #f5c6cb;
 }
 
+/* Download Butonu */
 .download-btn {
-    display: inline-block;
+    display: block; /* Block display kullanarak tam genişlik almasını sağlıyoruz */
     padding: 10px 20px;
-    margin: 20px 0;
+    margin: 20px auto; /* Yalnızca üst ve alt margin, yanlarda otomatik marj */
     font-size: 16px;
     font-weight: bold;
     color: #fff;
@@ -175,8 +176,20 @@ body {
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s;
+    text-align: center; /* İçerik ortalaması */
+    width: fit-content; /* Buton genişliğini içeriğe göre ayarlıyoruz */
 }
 
 .download-btn:hover {
     background-color: #218838;
 }
+
+/* Butonun Konumlandırılması İçin Container */
+.button-container {
+    display: flex;
+    justify-content: center; /* Yatayda ortalama */
+    align-items: center; /* Dikeyde ortalama */
+    height: 100vh; /* Sayfanın tamamını kaplaması için 100vh */
+    text-align: center; /* Buton içeriğinin ortalanması */
+}
+

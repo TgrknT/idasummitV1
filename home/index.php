@@ -98,20 +98,21 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
         </div>
     </header>
 
-    <!-- Hakkında Bölümü -->
-    <?php if (!empty($sections['hakkinda'])): ?>
-        <section id="about" class="content-section">
-            <div class="content-container">
-                <div class="text-container">
-                    <h2>Hakkında</h2>
-                    <p><?php echo $sections['hakkinda']['content_text']; ?></p>
-                </div>
-                <div class="image-container rotate-left">
-                    <img src="./content/<?php echo $sections['hakkinda']['image_url']; ?>" alt="Hakkında Resim">
-                </div>
+<!-- Hakkında Bölümü -->
+<?php if (!empty($sections['hakkinda'])): ?>
+    <section id="about" class="content-section">
+        <div class="content-container">
+            <div class="text-container">
+                <h2>Hakkında</h2>
+                <p><?php echo $sections['hakkinda']['content_text']; ?></p>
             </div>
-        </section>
-    <?php endif; ?>
+            <div class="image-container">
+                <!-- Masaüstü Resmi -->
+                <img class="desktop-image" src="./content/<?php echo $sections['hakkinda']['image_url']; ?>" alt="Hakkında Resim">
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
 
     <!-- Sürdürülebilir Motivasyon Bölümü -->
     <?php if (!empty($sections['motivasyon'])): ?>

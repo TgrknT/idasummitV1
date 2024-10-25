@@ -18,11 +18,11 @@
     <div class="sidebar">
         <h2>Admin Paneli</h2>
         <ul>
-            <li class="menu">
-                <a href="./homedesign/homeup.php" class="toggle" onclick="toggleMenu(this.parentNode)">Ana Sayfa</a></li>
+            <li><a href="./homedesign/homeup.php">Ana Sayfa</a></li>
             <li><a href="./textdesign/textdesign.php">Hakkında-Motivasyon</a></li>
-            <li><a href="#">İçerik Düzenleme</a></li>
-            <li><a href="#">Ayarlar</a></li>
+            <li><a href="./speakers/speakers.php">Konuşmacılar</a></li>
+            <li><a href="./partners/partners.php">Sponsorlar</a></li>
+            <li><a href="./katilim/katilim.php">Katılımcılar</a></li>
         </ul>
     </div>
 

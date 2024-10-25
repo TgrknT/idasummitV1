@@ -23,7 +23,8 @@
    <!-- Katılımcı Listesini İndir Butonu -->
 <div class="content">
     <h1>Admin Paneli</h1>
-    <a href="download_participants.php" class="download-btn">Katılımcı Listesini İndir</a>
+    <a href="download_participants.php" class="download-btn">Katılımcı Listesini İndir Word</a>
+    <a href="download_excel.php" class="download-btn">Katılımcı Listesini İndir Excel</a>
 </div>
 
 </body>

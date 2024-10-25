@@ -27,25 +27,23 @@ window.addEventListener("click", function(event) {
 
 
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const slider = document.getElementById('slider');
+document.addEventListener("DOMContentLoaded", function() {
+    const slider = document.getElementById('slider');
+    let scrollAmount = 0; // Kaydırma başlangıç noktası
+    const scrollStep = 1; // Her seferinde kaydırılacak miktar (px)
 
-        let scrollAmount = 0; // Kaydırma başlangıç noktası
-
-        function scrollSlider() {
-            scrollAmount -= 1; // Her seferinde 1px sola kaydır
-            slider.style.transform = `translateX(${scrollAmount}px)`;
-
-            // Eğer kaydırma sonuna ulaştıysa durdurma
-            if (Math.abs(scrollAmount) >= slider.scrollWidth - slider.clientWidth) {
-                return; // Daha fazla kaydırma yapılmaz
-            }
-
-            // Kaydırma işlemi devam eder
-            requestAnimationFrame(scrollSlider);
+    function scrollSlider() {
+        scrollAmount -= scrollStep; // Her seferinde 1px sola kaydır
+        slider.style.transform = `translateX(${scrollAmount}px)`;
+        
+        // Eğer slider tamamen kaydırıldıysa, kaydırmayı sıfırla
+        if (Math.abs(scrollAmount) >= slider.scrollWidth) {
+            scrollAmount = 0; // Kaydırmayı sıfırla
         }
+    }
 
-        // Kaydırmayı başlat
-        scrollSlider();
-    });
+    // Kaydırmayı belirli bir süre aralığında başlat
+    setInterval(scrollSlider, 20); // 20ms aralıkla kaydır
+});
+
 
