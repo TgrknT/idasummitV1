@@ -2,6 +2,13 @@
 session_start();
 require '../../config.php'; // Veritabanı bağlantısını dahil et
 
+
+// Eğer giriş yapılmamışsa kullanıcıyı login sayfasına yönlendir
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../login.php");
+    exit;
+}
+
 // Mevcut verileri çek
 $query = "SELECT * FROM home_content WHERE id = 1";
 $result = $conn->query($query);

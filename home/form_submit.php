@@ -1,26 +1,53 @@
 <?php
-require '../config.php'; // Veritabanı bağlantısı
+session_start();
+require '../config.php'; // Veritabanı bağlantısını çağır
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Formdan gelen verileri alın
-    $ad_soyad = $_POST['ad_soyad'];
-    $okul = $_POST['okul'];
-    $bolum = $_POST['bolum'];
-    $sinif = $_POST['sinif'];
-    $cep_tel = $_POST['cep_tel'];
-    $email = $_POST['email'];
+$error_message = ''; // Hata mesajı için boş bir değişken
+$success_message = ''; // Başarı mesajı için boş bir değişken
 
-    // Veritabanına ekleme işlemi
-    $stmt = $conn->prepare("INSERT INTO katilim_formu (ad_soyad, okul, bolum, sinif, cep_tel, email) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $ad_soyad, $okul, $bolum, $sinif, $cep_tel, $email);
+// Form gönderildiyse
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $ad_soyad = trim($_POST['ad_soyad']);
+    $okul = trim($_POST['okul']);
+    $bolum = trim($_POST['bolum']);
+    $sinif = trim($_POST['sinif']);
+    $cep_tel = trim($_POST['cep_tel']);
+    $email = trim($_POST['email']);
 
-    if ($stmt->execute()) {
-        echo "success";
+    // Telefon ve e-posta kontrolü için sorgu
+    $stmt = $conn->prepare("SELECT * FROM katilimcilar WHERE cep_tel = ? OR email = ?");
+    $stmt->bind_param("ss", $cep_tel, $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Eğer kayıt varsa hata mesajı göster
+        $error_message = "Bu telefon numarası veya e-posta adresi zaten kayıtlı!";
     } else {
-        echo "error";
+        // Kayıt yoksa veritabanına ekleyin
+        $stmt = $conn->prepare("INSERT INTO katilimcilar (ad_soyad, okul, bolum, sinif, cep_tel, email) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $ad_soyad, $okul, $bolum, $sinif, $cep_tel, $email);
+
+        // Veritabanına ekleme işlemi
+        if ($stmt->execute()) {
+            // Başarılıysa mesajı ayarla
+            $success_message = "Form başarıyla gönderildi!";
+        } else {
+            // Hata varsa
+            $error_message = "Kayıt sırasında bir hata oluştu: " . $stmt->error;
+        }
     }
 
     $stmt->close();
     $conn->close();
+
+    // Hata veya başarı durumuna göre yönlendirme yapma
+    if ($error_message) {
+        header("Location: form.php?error=" . urlencode($error_message));
+        exit;
+    } elseif ($success_message) {
+        header("Location: form.php?success=" . urlencode($success_message));
+        exit;
+    }
 }
 ?>

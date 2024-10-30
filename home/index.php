@@ -215,17 +215,17 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
         </div>
     </section>
 
-<!-- Katılım Formu Modal -->
-<div id="formModal" class="modal">
+    <div id="formModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
         <h2>Katılım Formu</h2>
         <form id="katilimFormu" method="post">
-            <!-- Ad Soyad -->
+            <!-- Ad Soyad (Yalnızca harf ve boşluk, maksimum 55 karakter) -->
             <label for="ad_soyad">Ad Soyad:</label>
-            <input type="text" id="ad_soyad" name="ad_soyad" placeholder="Adınızı ve soyadınızı girin" required>
+            <input type="text" id="ad_soyad" name="ad_soyad" placeholder="Adınızı ve soyadınızı girin"
+             title="Ad Soyad yalnızca harf ve boşluk içermelidir." maxlength="35" required>
 
-            <!-- Okul -->
+            <!-- Okul (Otomatik olarak Balıkesir Üniversitesi yazılı) -->
             <label for="okul">Okul:</label>
             <select id="okul" name="okul" required>
                 <option value="">Okul Seçin</option>
@@ -238,19 +238,21 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
 
             <!-- Bölüm -->
             <label for="bolum">Bölüm:</label>
-            <input type="text" id="bolum" name="bolum" placeholder="Bölümünüzü girin" required>
+            <input type="text" id="bolum" name="bolum" placeholder="Bölümünüzü girin" maxlength="35" required>
 
-            <!-- Sınıf -->
+            <!-- Sınıf (Yalnızca 1 hane) -->
             <label for="sinif">Sınıf:</label>
-            <input type="text" id="sinif" name="sinif" placeholder="Sınıfınızı girin" required>
+            <input type="text" id="sinif" name="sinif" placeholder="Sınıfınızı girin" 
+                   pattern="[1-4]" title="Sınıf yalnızca 1 ile 4 arasında bir rakam olmalıdır." maxlength="1" required>
 
-            <!-- Cep Telefonu -->
+            <!-- Cep Telefonu (11 haneli ve 05 ile başlamalı) -->
             <label for="cep_tel">Cep Telefonu:</label>
-            <input type="tel" id="cep_tel" name="cep_tel" placeholder="Telefon numaranızı girin" required>
+            <input type="tel" id="cep_tel" name="cep_tel" placeholder="Telefon numaranızı girin" 
+                   pattern="05[0-9]{9}" title="Telefon numarası 05 ile başlamalı ve 11 haneli olmalıdır." maxlength="11" required>
 
             <!-- E-posta -->
             <label for="email">E-posta:</label>
-            <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" required>
+            <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" maxlength="60" required>
 
             <!-- Gönderim Butonu -->
             <button type="submit">Gönder</button>
@@ -260,6 +262,12 @@ $event_date_js = date('Y-m-d\TH:i:s', strtotime($content['event_date']));
         <div id="successMessage" style="display: none; color: green; margin-top: 10px;">
             Form başarıyla gönderildi!
         </div>
+        <!-- Hata Mesajı -->
+        <div id="errorMessage" style="color: red;">
+            <?php if (isset($_GET['error'])) echo htmlspecialchars($_GET['error']); ?>
+        </div>
+
+
     </div>
 </div>
 

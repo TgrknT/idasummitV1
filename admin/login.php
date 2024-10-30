@@ -2,6 +2,7 @@
 session_start();
 require '../config.php'; // Veritabanı bağlantısını çağır
 
+
 $error_message = ''; // Hata mesajı için boş bir değişken
 
 // Eğer giriş denemesi yapıldıysa
@@ -21,8 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Oturumu başlat
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
-        echo "Başarıyla giriş yaptınız!";
-        // Kullanıcıyı admin panele yönlendirebiliriz.
+        // Kullanıcıyı admin panele yönlendir
         header("Location: adminpanel.php");
         exit;
     } else {
@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close(); // Sorguyu kapat
 }
 ?>
+
 
 
 

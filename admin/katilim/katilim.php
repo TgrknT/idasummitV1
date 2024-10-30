@@ -1,3 +1,12 @@
+<?php
+session_start();
+// Eğer giriş yapılmamışsa kullanıcıyı login sayfasına yönlendir
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
